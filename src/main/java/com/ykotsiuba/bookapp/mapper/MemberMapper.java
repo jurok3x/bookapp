@@ -1,7 +1,6 @@
 package com.ykotsiuba.bookapp.mapper;
 
 import com.ykotsiuba.bookapp.dto.MemberDTO;
-import com.ykotsiuba.bookapp.entity.Book;
 import com.ykotsiuba.bookapp.entity.Member;
 
 import java.util.stream.Collectors;
