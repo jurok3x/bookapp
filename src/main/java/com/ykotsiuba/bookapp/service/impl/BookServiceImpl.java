@@ -3,8 +3,6 @@ package com.ykotsiuba.bookapp.service.impl;
 import com.ykotsiuba.bookapp.dto.BookDTO;
 import com.ykotsiuba.bookapp.dto.BookSaveRequestDTO;
 import com.ykotsiuba.bookapp.entity.Book;
-import com.ykotsiuba.bookapp.exception.BookCannotBeDeletedException;
-import com.ykotsiuba.bookapp.exception.BookCannotBeUpdatedException;
 import com.ykotsiuba.bookapp.mapper.BookMapper;
 import com.ykotsiuba.bookapp.repository.BookRepository;
 import com.ykotsiuba.bookapp.service.BookService;
@@ -34,7 +32,7 @@ public class BookServiceImpl implements BookService {
             book = optionalBook.get();
             book.increaseAmount();
         } else {
-            Book.builder()
+            book = Book.builder()
                     .title(requestDTO.getTitle())
                     .author(requestDTO.getAuthor())
                     .amount(1)
@@ -71,7 +69,7 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Long id) {
         Book book = findOrThrow(id);
         if(!book.getMembers().isEmpty()) {
-            throw new BookCannotBeDeletedException(BOOK_CANNOT_BE_DELETED.getMessage());
+            throw new IllegalStateException(BOOK_CANNOT_BE_DELETED.getMessage());
         }
         log.info("Deleted book with id: {}", id);
         bookRepository.delete(book);
@@ -82,7 +80,7 @@ public class BookServiceImpl implements BookService {
         Book book = findOrThrow(id);
         Optional<Book> optionalBook = bookRepository.findByTitleAndAuthor(requestDTO.getTitle(), requestDTO.getAuthor());
         if(optionalBook.isPresent()) {
-            throw new BookCannotBeUpdatedException(BOOK_CANNOT_BE_DELETED.getMessage());
+            throw new IllegalStateException(BOOK_CANNOT_BE_DELETED.getMessage());
         }
         log.info("Updating book with id: {}", id);
         book.setTitle(requestDTO.getTitle());

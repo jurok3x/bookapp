@@ -3,7 +3,6 @@ package com.ykotsiuba.bookapp.service.impl;
 import com.ykotsiuba.bookapp.dto.MemberDTO;
 import com.ykotsiuba.bookapp.dto.MemberSaveRequestDTO;
 import com.ykotsiuba.bookapp.entity.Member;
-import com.ykotsiuba.bookapp.exception.MemberCannotBeDeletedException;
 import com.ykotsiuba.bookapp.mapper.MemberMapper;
 import com.ykotsiuba.bookapp.repository.MemberRepository;
 import com.ykotsiuba.bookapp.service.MemberService;
@@ -62,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(Long id) {
         Member member = findOrThrow(id);
         if(!member.getBooks().isEmpty()) {
-            throw new MemberCannotBeDeletedException(MEMBER_CANNOT_BE_DELETED.getMessage());
+            throw new IllegalStateException(MEMBER_CANNOT_BE_DELETED.getMessage());
         }
         log.info("Deleted member with id: {}", id);
         memberRepository.delete(member);

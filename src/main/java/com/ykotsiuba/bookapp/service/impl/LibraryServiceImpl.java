@@ -1,9 +1,12 @@
 package com.ykotsiuba.bookapp.service.impl;
 
+import com.ykotsiuba.bookapp.dto.BookDTO;
 import com.ykotsiuba.bookapp.dto.BookMemberRequestDTO;
 import com.ykotsiuba.bookapp.dto.MemberDTO;
 import com.ykotsiuba.bookapp.entity.Book;
 import com.ykotsiuba.bookapp.entity.Member;
+import com.ykotsiuba.bookapp.entity.projection.BookTitleCountProjection;
+import com.ykotsiuba.bookapp.mapper.BookMapper;
 import com.ykotsiuba.bookapp.mapper.MemberMapper;
 import com.ykotsiuba.bookapp.repository.BookRepository;
 import com.ykotsiuba.bookapp.repository.MemberRepository;
@@ -12,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +72,23 @@ public class LibraryServiceImpl implements LibraryService {
         log.info("Member {} returned book {}", member.getId(), book.getId());
 
         return MemberMapper.toDTO(updatedMember);
+    }
+
+    @Override
+    public List<BookDTO> findBooksByMemberName(String name) {
+        List<Book> books = bookRepository.findBooksByMemberName(name);
+        return books.stream()
+                .map(BookMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<String> findBorrowedBooksDistinctTitles() {
+        return bookRepository.findBorrowedBooksDistinctTitles();
+    }
+
+    @Override
+    public List<BookTitleCountProjection> findDistinctBookTitlesWithCount() {
+        return bookRepository.findDistinctBookTitlesWithCount();
     }
 }
