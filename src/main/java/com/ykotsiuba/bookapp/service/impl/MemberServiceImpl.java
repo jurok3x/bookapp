@@ -24,7 +24,6 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
-
     @Override
     public MemberDTO saveMember(MemberSaveRequestDTO requestDTO) {
         Member member = Member.builder()
