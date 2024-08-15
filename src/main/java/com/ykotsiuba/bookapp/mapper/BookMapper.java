@@ -14,11 +14,13 @@ public class BookMapper {
         dto.setTitle(book.getTitle());
         dto.setAuthor(book.getAuthor());
         dto.setAmount(book.getAmount());
-        dto.setMembersIds(
-                book.getMembers().stream()
-                        .map(Member::getId)
-                        .toList()
-        );
+        if (book.getMembers() != null) {
+            dto.setMembersIds(
+                    book.getMembers().stream()
+                            .map(Member::getId)
+                            .toList()
+            );
+        }
         return dto;
     }
 

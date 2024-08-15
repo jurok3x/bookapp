@@ -12,11 +12,13 @@ public class MemberMapper {
         dto.setId(member.getId());
         dto.setName(member.getName());
         dto.setMembershipDate(member.getMembershipDate());
-        dto.setBooksDTO(
-                member.getBooks().stream()
-                        .map(BookMapper::toDTO)
-                        .toList()
-        );
+        if(member.getBooks() != null) {
+            dto.setBooksDTO(
+                    member.getBooks().stream()
+                            .map(BookMapper::toDTO)
+                            .toList()
+            );
+        }
         return dto;
     }
 
