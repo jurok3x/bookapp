@@ -3,9 +3,11 @@ package com.ykotsiuba.bookapp.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class BookSaveRequestDTO {
     @NotBlank(message = "Title is required")
     @Size(min = 3, message = "Title must be at least 3 characters long")
