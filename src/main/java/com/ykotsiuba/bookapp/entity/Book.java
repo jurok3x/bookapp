@@ -2,26 +2,40 @@ package com.ykotsiuba.bookapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
+
     private String author;
+
     private int amount;
 
     @ManyToMany(mappedBy = "books")
     @JsonIgnore
-    private Set<Member> members = new HashSet<>();
+    private List<Member> members = new ArrayList<>();
+
+    public void increaseAmount() {
+        amount++;
+    }
+
+    public void decreaseAmount() {
+        amount--;
+    }
 }
