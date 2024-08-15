@@ -18,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_seq_gen")
+    @SequenceGenerator(name = "books_seq_gen", sequenceName = "book_id_seq", allocationSize = 1)
     private Long id;
 
     private String title;
