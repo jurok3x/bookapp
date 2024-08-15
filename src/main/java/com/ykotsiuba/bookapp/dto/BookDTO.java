@@ -3,7 +3,8 @@ package com.ykotsiuba.bookapp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class BookDTO {
@@ -12,5 +13,5 @@ public class BookDTO {
     private String author;
     private int amount;
     @JsonProperty("members")
-    private Set<MemberDTO> membersDTO;
+    private List<Long> membersIds = new ArrayList<>();
 }

@@ -3,8 +3,6 @@ package com.ykotsiuba.bookapp.mapper;
 import com.ykotsiuba.bookapp.dto.MemberDTO;
 import com.ykotsiuba.bookapp.entity.Member;
 
-import java.util.stream.Collectors;
-
 public class MemberMapper {
 
     private MemberMapper() {}
@@ -17,18 +15,20 @@ public class MemberMapper {
         dto.setBooksDTO(
                 member.getBooks().stream()
                         .map(BookMapper::toDTO)
-                        .collect(Collectors.toSet())
+                        .toList()
         );
         return dto;
     }
 
     public static Member toEntity(MemberDTO memberDTO) {
         Member member = new Member();
+        member.setId(memberDTO.getId());
         member.setName(memberDTO.getName());
+        member.setMembershipDate(memberDTO.getMembershipDate());
         member.setBooks(
                 memberDTO.getBooksDTO().stream()
                         .map(BookMapper::toEntity)
-                        .collect(Collectors.toSet())
+                        .toList()
         );
         return member;
     }
